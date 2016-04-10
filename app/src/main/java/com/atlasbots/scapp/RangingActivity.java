@@ -24,6 +24,7 @@ import java.util.Collection;
 public class RangingActivity extends ActionBarActivity implements BeaconConsumer, RangeNotifier {
 
     private BeaconManager mBeaconManager;
+    Utils utils = new Utils();
 
     @Override
     public void onResume() {
@@ -58,9 +59,11 @@ public class RangingActivity extends ActionBarActivity implements BeaconConsumer
                         " approximately " + beacon.getDistance() + " meters away.");
             }
         }
+
         runOnUiThread(new Runnable() {
             public void run() {
-                ((WebView) RangingActivity.this.findViewById(R.id.webview)).loadUrl("http://172.16.109.60:9000/");
+                WebView myWebView = (WebView) findViewById(R.id.webview);
+                utils.renderPage("https://www.google.com/", myWebView);
             }
         });
     }
@@ -90,7 +93,6 @@ public class RangingActivity extends ActionBarActivity implements BeaconConsumer
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
