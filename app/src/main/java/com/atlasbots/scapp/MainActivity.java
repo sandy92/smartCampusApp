@@ -18,10 +18,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WebView myWebView = (WebView) findViewById(R.id.webview);
+       /* WebView myWebView = (WebView) findViewById(R.id.webview);
         utils.renderPage("https://www.google.com/", myWebView);
 
-//
+//*/
 //        WebSettings webSettings = myWebView.getSettings();
 //        webSettings.setJavaScriptEnabled(true);
 //

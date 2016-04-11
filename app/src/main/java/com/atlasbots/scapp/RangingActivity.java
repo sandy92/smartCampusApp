@@ -27,9 +27,22 @@ public class RangingActivity extends ActionBarActivity implements BeaconConsumer
     Utils utils = new Utils();
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ranging);
+
+    /*    mBeaconManager = BeaconManager.getInstanceForApplication(this.getApplicationContext());
+        // Detect the main Eddystone-UID frame:
+        mBeaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("s:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19"));
+        mBeaconManager.bind(this); */
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        mBeaconManager = BeaconManager.getInstanceForApplication(this.getApplicationContext());
+       mBeaconManager = BeaconManager.getInstanceForApplication(this.getApplicationContext());
         // Detect the main Eddystone-UID frame:
         mBeaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("s:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19"));
@@ -46,7 +59,6 @@ public class RangingActivity extends ActionBarActivity implements BeaconConsumer
         }
         mBeaconManager.setRangeNotifier(this);
     }
-
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
         for (Beacon beacon : beacons) {
@@ -60,12 +72,12 @@ public class RangingActivity extends ActionBarActivity implements BeaconConsumer
             }
         }
 
-        runOnUiThread(new Runnable() {
-            public void run() {
-                WebView myWebView = (WebView) findViewById(R.id.webview);
-                utils.renderPage("https://www.google.com/", myWebView);
-            }
-        });
+       runOnUiThread(new Runnable() {
+           public void run() {
+               WebView myWebView = (WebView) findViewById(R.id.webview);
+               utils.renderPage("https://www.google.com/", myWebView);
+           }
+       });
     }
 
     @Override
@@ -74,11 +86,7 @@ public class RangingActivity extends ActionBarActivity implements BeaconConsumer
         mBeaconManager.unbind(this);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ranging);
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
