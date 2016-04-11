@@ -16,11 +16,11 @@ public class Utils {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        webView.loadUrl("https://www.google.com");
+        webView.loadUrl(url);
 //        webView.loadUrl(url);
         webView.setWebViewClient(new WebViewClient(){
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                String url2 = "https://www.google.com/";
+                String url2 = url;
 
                 if(url!=null && url.startsWith(url2)) {
                     return false;

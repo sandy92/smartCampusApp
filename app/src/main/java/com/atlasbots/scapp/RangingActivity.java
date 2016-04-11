@@ -66,7 +66,7 @@ public class RangingActivity extends ActionBarActivity implements BeaconConsumer
                 // This is a Eddystone-UID frame
                 Identifier namespaceId = beacon.getId1();
                 Identifier instanceId = beacon.getId2();
-                Log.d("RangingActivity", "I see a beacon transmitting namespace id: " + namespaceId +
+                System.out.println("I see a beacon transmitting namespace id: " + namespaceId +
                         " and instance id: " + instanceId +
                         " approximately " + beacon.getDistance() + " meters away.");
             }
@@ -75,7 +75,7 @@ public class RangingActivity extends ActionBarActivity implements BeaconConsumer
        runOnUiThread(new Runnable() {
            public void run() {
                WebView myWebView = (WebView) findViewById(R.id.webview);
-               utils.renderPage("https://www.google.com/", myWebView);
+               utils.renderPage("http://10.136.109.45:9000/", myWebView);
            }
        });
     }
