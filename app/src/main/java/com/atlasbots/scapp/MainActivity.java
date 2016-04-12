@@ -275,10 +275,10 @@ private DrawerLayout mDrawerLayout;
         Fragment fragment = null;
         switch (position) {
             case 0:
-//                fragment = new HomeFragment();
+                fragment = new HomeFragment();
                 break;
             case 1:
-//                fragment = new FindPeopleFragment();
+                fragment = new HomeFragment();
                 break;
             case 2:
 //                fragment = new PhotosFragment();
