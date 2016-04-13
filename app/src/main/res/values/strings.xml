@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SCapp</string>
+    <string name="app_name">SmartCampus</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Slider Menu Opened</string>

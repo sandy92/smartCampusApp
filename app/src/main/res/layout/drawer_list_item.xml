@@ -25,8 +25,10 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="@color/list_item_title"
+        android:textSize="9pt"
         android:gravity="center_vertical"
-        android:paddingRight="40dp"/>
+        android:paddingLeft="20dp"/>
+        <!---->android:paddingRight="40dp"/>
 
     <!--<TextView android:id="@+id/counter"-->
         <!--android:layout_width="wrap_content"-->

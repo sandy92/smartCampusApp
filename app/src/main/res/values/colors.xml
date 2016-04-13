@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F5</color>
+    <color name="colorPrimary">#000</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF40</color>
-    <color name="list_divider">#FF4081</color>
-    <color name="list_background">#3F1A</color>
-    <color name="list_background_pressed">#FF12</color>
-    <color name="counter_text_bg">#FFFF</color>
+    <color name="colorAccent">#9f9e9e</color>
+    <color name="list_divider">#17ba8f</color>
+    <color name="list_background">#17ba8f</color>
+    <color name="list_background_pressed">#9f9e9e</color>
+    <color name="counter_text_bg">#000</color>
     <color name="counter_text_color">#FAD</color>
-    <color name="list_item_title">#45FF</color>
+    <color name="list_item_title">#FFF</color>
 </resources>
