@@ -17,6 +17,7 @@ import com.atlasbots.scapp.references.Constants;
  * Created by smitha on 4/11/16.
  */
 public class HomeFragment extends Fragment {
+
     Utils utils = new Utils();
 
    @Override
