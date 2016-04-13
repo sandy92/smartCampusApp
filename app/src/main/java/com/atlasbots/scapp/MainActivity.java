@@ -23,8 +23,11 @@ import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.atlasbots.scapp.adapter.CreateEventFragment;
 import com.atlasbots.scapp.adapter.HomeFragment;
 import com.atlasbots.scapp.adapter.NavDrawerListAdapter;
+import com.atlasbots.scapp.adapter.RecommendedFragment;
+import com.atlasbots.scapp.adapter.StarredFragment;
 import com.atlasbots.scapp.models.NavDrawerItem;
 import com.atlasbots.scapp.R;
 import com.atlasbots.scapp.references.Constants;
@@ -48,57 +51,7 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
     Utils utils = new Utils();
     Map<String, String> availableBeacons = new HashMap<>();
     private String deviceId = "";
-
-//    Utils utils = new Utils();
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//       /* WebView myWebView = (WebView) findViewById(R.id.webview);
-//        utils.renderPage("https://www.google.com/", myWebView);
-//
-////*/
-////        WebSettings webSettings = myWebView.getSettings();
-////        webSettings.setJavaScriptEnabled(true);
-////
-////        myWebView.loadUrl("https://www.google.com");
-////        myWebView.setWebViewClient(new WebViewClient(){
-////            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-////                String url2 = "https://www.google.com/";
-////
-////                if(url!=null && url.startsWith(url2)) {
-////                    return false;
-////                } else {
-////                    view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-////                    return true;
-////                }
-////            }
-////        });
-//    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-private DrawerLayout mDrawerLayout;
+    private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -119,10 +72,12 @@ private DrawerLayout mDrawerLayout;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         deviceId = Settings.Secure.getString(this.getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+                   Settings.Secure.ANDROID_ID);
 
         setContentView(R.layout.activity_main);
-
+        WebView myWebView = (WebView) findViewById(R.id.homewebview);
+        //System.out.println("Here is the url : " + Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons));
+        utils.renderPage(Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons), myWebView);
         mTitle = mDrawerTitle = getTitle();
 
         // load slide menu items
@@ -149,7 +104,7 @@ private DrawerLayout mDrawerLayout;
         // Pages
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
         // What's hot, We  will add a counter here
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+      //  navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
 
 
         // Recycle the typed array
@@ -185,22 +140,15 @@ private DrawerLayout mDrawerLayout;
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-            displayView(0);
+            //displayView(0);
         }
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_ranging, menu);
-    return true;
-}
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -275,22 +223,26 @@ private DrawerLayout mDrawerLayout;
         Fragment fragment = null;
         switch (position) {
             case 0:
+                //Home fragment
                 fragment = new HomeFragment();
                 break;
+               /* Intent intent= new Intent(this,HomeFragment.class);
+                startActivity(intent);*/
             case 1:
+                //categories
                 fragment = new HomeFragment();
                 break;
             case 2:
-//                fragment = new PhotosFragment();
+                //recommended events
+                fragment = new RecommendedFragment();
                 break;
             case 3:
-//                fragment = new CommunityFragment();
+                //starred events
+                fragment = new StarredFragment();
                 break;
             case 4:
-//                fragment = new PagesFragment();
-                break;
-            case 5:
-//                fragment = new WhatsHotFragment();
+                //create event
+                fragment = new CreateEventFragment();
                 break;
 
             default:
@@ -337,16 +289,6 @@ private DrawerLayout mDrawerLayout;
 
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-//        for (Beacon beacon : beacons) {
-//            if (beacon.getServiceUuid() == 0xfeaa && beacon.getBeaconTypeCode() == 0x00) {
-//                // This is a Eddystone-UID frame
-//                Identifier namespaceId = beacon.getId1();
-//                Identifier instanceId = beacon.getId2();
-//                System.out.println("I see a beacon transmitting namespace id: " + namespaceId +
-//                        " and instance id: " + instanceId +
-//                        " approximately " + beacon.getDistance() + " meters away.");
-//            }
-//        }
         for (Beacon beacon : beacons) {
             Identifier nameSpaceId = beacon.getId1();
             Identifier instanceId = beacon.getId2();
@@ -357,24 +299,19 @@ private DrawerLayout mDrawerLayout;
         }
 
         onPause();
-//       runOnUiThread(new Runnable() {
-//           public void run() {
-//               WebView myWebView = (WebView) findViewById(R.id.webview);
-//               utils.renderPage("http://10.136.109.45:9000/", myWebView);
-//           }
-//       });
     }
 
     @Override
     public void onPause() {
-        super.onPause();
         runOnUiThread(new Runnable() {
             public void run() {
-                WebView myWebView = (WebView) findViewById(R.id.webview);
+                WebView myWebView = (WebView) findViewById(R.id.homewebview);
                 System.out.println("Here is the url : " + Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons));
                 utils.renderPage(Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons), myWebView);
-            }
-        });
+        }
+    });
+        super.onPause();
+
         mBeaconManager.unbind(this);
     }
 

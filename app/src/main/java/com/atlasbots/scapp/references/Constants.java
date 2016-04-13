@@ -6,7 +6,7 @@ package com.atlasbots.scapp.references;
 public class Constants {
 
     static public class urls {
-        public static final String getEventsUrl = "http://10.137.30.56:9000/beacons/";
+        public static final String getEventsUrl = "http://192.168.0.6:9000/beacons/";
         public static final String BEACON_ID = "beaconId=";
         public static final String DEVICE_ID = "deviceId=";
     }

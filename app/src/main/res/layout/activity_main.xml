@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <WebView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/webview"
+        android:id="@+id/homewebview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
         />
     </FrameLayout>
 
-     Listview to display slider menu
+    Listview to display slider menu
     <ListView
     android:id="@+id/list_slidermenu"
     android:layout_width="240dp"
@@ -27,5 +27,4 @@
     android:dividerHeight="1dp"
     android:listSelector="@drawable/list_selector"
     android:background="@color/list_background"/>
-
 </android.support.v4.widget.DrawerLayout>

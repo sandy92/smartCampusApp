@@ -15,7 +15,7 @@ import com.atlasbots.scapp.models.NavDrawerItem;
 import java.util.ArrayList;
 
 /**
- * Created by sank on 4/11/16.
+ * Created by smitha on 4/11/16.
  */
 public class NavDrawerListAdapter extends BaseAdapter{
     private Context context;
@@ -49,18 +49,18 @@ public class NavDrawerListAdapter extends BaseAdapter{
             convertView = mInflater.inflate(R.layout.drawer_list_item, null);
         }
 
-//        ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
-        TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
-//        TextView txtCount = (TextView) convertView.findViewById(R.id.counter);
+//          ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
+            TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
+//          TextView txtCount = (TextView) convertView.findViewById(R.id.counter);
 
-//        imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
-        txtTitle.setText(navDrawerItems.get(position).getTitle());
+//          imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
+            txtTitle.setText(navDrawerItems.get(position).getTitle());
 
-        // displaying count
-        // check whether it set visible or not
-//        if(navDrawerItems.get(position).getCounterVisibility()){
+            // displaying count
+            // check whether it set visible or not
+//          if(navDrawerItems.get(position).getCounterVisibility()){
 //            txtCount.setText(navDrawerItems.get(position).getCount());
-//        }else{
+//          }else{
 //            // hide the counter view
 //            txtCount.setVisibility(View.GONE);
 //        }
