@@ -75,9 +75,9 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
                    Settings.Secure.ANDROID_ID);
 
         setContentView(R.layout.activity_main);
-        WebView myWebView = (WebView) findViewById(R.id.homewebview);
+//        WebView myWebView = (WebView) findViewById(R.id.homewebview);
         //System.out.println("Here is the url : " + Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons));
-        utils.renderPage(Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons), myWebView);
+//        utils.renderPage(Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons), myWebView);
         mTitle = mDrawerTitle = getTitle();
 
         // load slide menu items
@@ -224,10 +224,11 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
         switch (position) {
             case 0:
                 //Home fragment
-                fragment = new HomeFragment();
-                break;
-               /* Intent intent= new Intent(this,HomeFragment.class);
-                startActivity(intent);*/
+//                fragment = new HomeFragment();
+//                break;
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
             case 1:
                 //categories
                 fragment = new HomeFragment();
@@ -308,8 +309,8 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
                 WebView myWebView = (WebView) findViewById(R.id.homewebview);
                 System.out.println("Here is the url : " + Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons));
                 utils.renderPage(Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons), myWebView);
-        }
-    });
+            }
+        });
         super.onPause();
 
         mBeaconManager.unbind(this);

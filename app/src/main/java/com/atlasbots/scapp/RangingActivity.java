@@ -1,5 +1,6 @@
 package com.atlasbots.scapp;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.ActionBarActivity;
@@ -26,7 +27,7 @@ import com.atlasbots.scapp.references.Constants;
 /**
  * Created by sank on 4/10/16.
  */
-public class RangingActivity extends ActionBarActivity implements BeaconConsumer, RangeNotifier {
+public class RangingActivity extends Activity implements BeaconConsumer, RangeNotifier {
 
     private BeaconManager mBeaconManager;
     Utils utils = new Utils();
