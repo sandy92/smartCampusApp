@@ -1,6 +1,7 @@
 package com.atlasbots.scapp.adapter;
 
 import android.app.Fragment;
+import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +21,12 @@ public class StarredFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        String deviceId = bluetoothAdapter.getAddress();
+
         View v=inflater.inflate(R.layout.fragment_home, container, false);
         WebView mWebView = (WebView) v.findViewById(R.id.webview);
-        utils.renderPage(Constants.urls.getEventsUrl, mWebView);
+        utils.renderPage(Constants.urls.playService + "starredEvents/" + deviceId, mWebView);
 
         return v;
     }

@@ -2,6 +2,7 @@ package com.atlasbots.scapp;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -71,9 +72,9 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        deviceId = Settings.Secure.getString(this.getContentResolver(),
-                   Settings.Secure.ANDROID_ID);
-
+        BluetoothAdapter m_BluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+//        deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        deviceId = m_BluetoothAdapter.getAddress();
         setContentView(R.layout.activity_main);
 //        WebView myWebView = (WebView) findViewById(R.id.homewebview);
         //System.out.println("Here is the url : " + Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons));
