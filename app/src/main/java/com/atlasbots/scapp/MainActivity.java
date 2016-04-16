@@ -31,6 +31,7 @@ import com.atlasbots.scapp.adapter.HomeFragment;
 import com.atlasbots.scapp.adapter.NavDrawerListAdapter;
 import com.atlasbots.scapp.adapter.RecommendedFragment;
 import com.atlasbots.scapp.adapter.StarredFragment;
+import com.atlasbots.scapp.adapter.MyEventsFragment;
 import com.atlasbots.scapp.models.NavDrawerItem;
 import com.atlasbots.scapp.R;
 import com.atlasbots.scapp.references.Constants;
@@ -93,6 +94,7 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(4, -1)));
 
         navMenuIcons.recycle();
 
@@ -223,6 +225,10 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
                 //create event
                 fragment = new CreateEventFragment();
                 break;
+            case 5:
+                fragment = new MyEventsFragment();
+                break;
+
 
             default:
                 break;

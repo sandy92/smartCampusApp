@@ -12,7 +12,7 @@
         <item >Recommended events</item>
         <item >Starred events</item>
         <item >Create an event</item>
-        <!--<item >What\'s Hot</item>-->
+        <item >Events I Host</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
