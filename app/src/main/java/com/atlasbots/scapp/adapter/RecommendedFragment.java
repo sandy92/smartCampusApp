@@ -25,7 +25,7 @@ public class RecommendedFragment extends Fragment {
         String deviceId = bluetoothAdapter.getAddress();
 
         WebView mWebView = (WebView) v.findViewById(R.id.webview);
-        utils.renderPage(Constants.urls.playService + "recommendedEvents/" + deviceId + "/", mWebView);
+        utils.renderPage(Constants.urls.playService + "recommendedEvents/" + deviceId, mWebView);
         return v;
     }
 }

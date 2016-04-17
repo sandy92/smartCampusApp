@@ -83,6 +83,7 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
 
         myWebView = (WebView) findViewById(R.id.homewebview);
         myWebView.getSettings().setJavaScriptEnabled(true);
+
         //System.out.println("Here is the url : " + Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons));
         mTitle = mDrawerTitle = getTitle();
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
@@ -128,6 +129,15 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
         }
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (myWebView.canGoBack()) {
+            myWebView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

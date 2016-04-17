@@ -2,6 +2,7 @@ package com.atlasbots.scapp.adapter;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -23,13 +24,13 @@ public class HomeFragment extends Fragment {
    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-           View v=inflater.inflate(R.layout.fragment_home, container, false);
-            WebView mWebView = (WebView) v.findViewById(R.id.webview);
-            utils.renderPage(Constants.urls.getEventsUrl, mWebView);
+       BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+       String deviceId = bluetoothAdapter.getAddress();
+       View v=inflater.inflate(R.layout.fragment_home, container, false);
+       WebView mWebView = (WebView) v.findViewById(R.id.webview);
+       utils.renderPage(Constants.urls.playService+ "category/"+ deviceId, mWebView);
+       return v;
 
-           return v;
        }
-
-
 }
 
