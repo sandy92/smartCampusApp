@@ -27,7 +27,7 @@ public class CreateEventFragment extends Fragment {
 
         View v=inflater.inflate(R.layout.fragment_home, container, false);
         WebView mWebView = (WebView) v.findViewById(R.id.webview);
-        utils.renderPage(Constants.urls.playService + "event/" + deviceId, mWebView);
+        utils.renderPage(Constants.urls.playService + "event/new/" + deviceId, mWebView);
 
         return v;
     }

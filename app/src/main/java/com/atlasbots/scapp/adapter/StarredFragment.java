@@ -26,6 +26,7 @@ public class StarredFragment extends Fragment {
 
         View v=inflater.inflate(R.layout.fragment_home, container, false);
         WebView mWebView = (WebView) v.findViewById(R.id.webview);
+        mWebView.getSettings().setJavaScriptEnabled(true);
         utils.renderPage(Constants.urls.playService + "starredEvents/" + deviceId, mWebView);
 
         return v;

@@ -16,6 +16,7 @@ public class Utils {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
+        System.out.println("I am in render : " + url);
         webView.loadUrl(url);
 //        webView.loadUrl(url);
         webView.setWebViewClient(new WebViewClient(){

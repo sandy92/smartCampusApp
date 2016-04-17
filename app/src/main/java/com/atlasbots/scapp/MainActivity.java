@@ -53,20 +53,25 @@ import java.util.Map;
 public class MainActivity extends Activity implements BeaconConsumer, RangeNotifier {
     private BeaconManager mBeaconManager;
     Utils utils = new Utils();
-    Map<String, String> availableBeacons = new HashMap<>();
+
     private String deviceId = "";
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-
+    Map<String, String> availableBeacons = new HashMap<>();
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
 
     private String[] navMenuTitles;
     private TypedArray navMenuIcons;
 
-    private ArrayList<NavDrawerItem> navDrawerItems;
+    private ArrayList<NavDrawerItem> navDrawerItems= new ArrayList<>();
     private NavDrawerListAdapter adapter;
+
+    private Region region = new Region("all-beacons-region", null, null, null);
+    private WebView myWebView;
+
+    private int beaconFailedCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +81,9 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
         deviceId = m_BluetoothAdapter.getAddress();
 
 
-//        WebView myWebView = (WebView) findViewById(R.id.homewebview);
+        myWebView = (WebView) findViewById(R.id.homewebview);
+        myWebView.getSettings().setJavaScriptEnabled(true);
         //System.out.println("Here is the url : " + Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons));
-//        utils.renderPage(Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons), myWebView);
         mTitle = mDrawerTitle = getTitle();
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
         navMenuIcons = getResources()
@@ -86,8 +91,6 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
-
-        navDrawerItems = new ArrayList<NavDrawerItem>();
 
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
@@ -201,24 +204,40 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
      */
     private void displayView(int position) {
         Fragment fragment = null;
+
+        try {
+            if(position == 0){
+                mBeaconManager.startRangingBeaconsInRegion(region);
+            } else{
+                mBeaconManager.stopRangingBeaconsInRegion(region);
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
         switch (position) {
             case 0:
                 //Home fragment
 //                fragment = new HomeFragment();
 //                break;
+                beaconFailedCounter = 0;
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
+                break;
             case 1:
                 //categories
+
                 fragment = new HomeFragment();
                 break;
             case 2:
                 //recommended events
+
                 fragment = new RecommendedFragment();
                 break;
             case 3:
                 //starred events
+
                 fragment = new StarredFragment();
                 break;
             case 4:
@@ -255,49 +274,64 @@ public class MainActivity extends Activity implements BeaconConsumer, RangeNotif
     public void onResume() {
         super.onResume();
         verifyBluetooth();
-        /*mBeaconManager = BeaconManager.getInstanceForApplication(this.getApplicationContext());
-        // Detect the main Eddystone-UID frame:
-        mBeaconManager.getBeaconParsers().add(new BeaconParser().
-                setBeaconLayout("s:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19"));
-        mBeaconManager.bind(this);*/
+
     }
 
     @Override
     public void onBeaconServiceConnect() {
-        Region region = new Region("all-beacons-region", null, null, null);
         try {
             mBeaconManager.startRangingBeaconsInRegion(region);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         mBeaconManager.setRangeNotifier(this);
-
-
     }
 
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-        for (Beacon beacon : beacons) {
-            Identifier nameSpaceId = beacon.getId1();
-            Identifier instanceId = beacon.getId2();
-            if (!availableBeacons.keySet().contains(nameSpaceId)) {
-                availableBeacons.put(nameSpaceId.toString(), instanceId.toString());
+        if(beacons.size() != 0) {
+            for (Beacon beacon : beacons) {
+                Identifier nameSpaceId = beacon.getId1();
+                Identifier instanceId = beacon.getId2();
+                if (!availableBeacons.keySet().contains(nameSpaceId)) {
+                    availableBeacons.put(nameSpaceId.toString(), instanceId.toString());
+                }
             }
-            System.out.println(beacon.getId1() + " " + beacon.getId2());
-        }
+            try {
+                mBeaconManager.stopRangingBeaconsInRegion(region);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Here is the url : " + Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons));
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    utils.renderPage(Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons), myWebView);
 
-        onPause();
+                }
+            });
+        } else {
+            beaconFailedCounter++;
+            if(beaconFailedCounter == 5){
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        utils.renderPage(Constants.urls.noBeaconsUrl, myWebView);
+
+                    }
+                });
+                beaconFailedCounter = 0;
+            }
+        }
     }
 
     @Override
     public void onPause() {
-        runOnUiThread(new Runnable() {
+        /*runOnUiThread(new Runnable() {
             public void run() {
                 WebView myWebView = (WebView) findViewById(R.id.homewebview);
                 System.out.println("Here is the url : " + Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons));
                 utils.renderPage(Constants.urls.getEventsUrl + generateQueryParams(deviceId, availableBeacons), myWebView);
             }
-        });
+        });*/
         super.onPause();
 
         mBeaconManager.unbind(this);
